@@ -37,10 +37,18 @@ func Cutter(prefix, bit int) int {
 	return d
 }
 
-func B6Code() int {
+func D6Code() int {
 	return Cutter(6, B6Bit)
 }
 
-func B3Code() int {
+func D3Code() int {
 	return Cutter(3, B3Bit)
+}
+
+func S6Code() string {
+	return fmt.Sprintf("%d", Cutter(6, B6Bit))
+}
+
+func S3Code() string {
+	return fmt.Sprintf("%d", Cutter(3, B6Bit))
 }
