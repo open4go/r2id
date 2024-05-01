@@ -3,7 +3,6 @@ package r2id
 import (
 	"context"
 	"fmt"
-	"github.com/r2day/db"
 	"log"
 	"time"
 )
@@ -20,13 +19,13 @@ func QueueTicketNumber(ctx context.Context, ticketPrefix string, namespace strin
 	fullKey := fmt.Sprintf("%s:%s:%s", prefix, namespace, key)
 
 	// 获取当前排队号
-	currentNumber, err := db.RDB.Incr(ctx, fullKey).Result()
+	currentNumber, err := GetRedisMiddleHandler().Incr(ctx, fullKey).Result()
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// 两天后过期
-	db.RDB.Expire(ctx, fullKey, time.Hour*48)
+	GetRedisMiddleHandler().Expire(ctx, fullKey, time.Hour*48)
 
 	// 格式化排队号，例如 A5001
 	formattedNumber := fmt.Sprintf("%s%04d", ticketPrefix, currentNumber)
