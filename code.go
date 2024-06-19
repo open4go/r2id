@@ -3,7 +3,9 @@ package r2id
 import (
 	"fmt"
 	"github.com/bwmarrin/snowflake"
+	"github.com/spf13/viper"
 	"strconv"
+	"sync"
 )
 
 const (
@@ -12,12 +14,27 @@ const (
 	B3Bit     = 3
 )
 
+var (
+	node *snowflake.Node
+	once sync.Once
+)
+
+func InitNode() {
+	nodeId := viper.GetInt64("random.r2id.node")
+	if nodeId == 0 {
+		nodeId = 1
+	}
+	var err error
+	node, err = snowflake.NewNode(nodeId)
+	if err != nil {
+		panic(err) // 如果节点初始化失败，则立即中止程序
+	}
+}
+
 // Cutter digit with 6 bits
 func Cutter(prefix, bit int) int {
-	node, err := snowflake.NewNode(1)
-	if err != nil {
-		return DefaultB6
-	}
+	// 确保node只被初始化一次
+	once.Do(InitNode)
 
 	// Generate a snowflake ID.
 	id := node.Generate()
@@ -50,5 +67,5 @@ func S6Code() string {
 }
 
 func S3Code() string {
-	return fmt.Sprintf("%d", Cutter(3, B6Bit))
+	return fmt.Sprintf("%d", Cutter(3, B3Bit))
 }
