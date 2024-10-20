@@ -8,6 +8,10 @@ import (
 	"time"
 )
 
+const (
+	OrderLength = 18
+)
+
 // GenerateRandomString 生成随机字符串
 func GenerateRandomString(length int) string {
 	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
@@ -20,7 +24,7 @@ func GenerateRandomString(length int) string {
 }
 
 func GenerateOutTradeNo(prefix ...string) string {
-	const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	var result strings.Builder
 
 	// 如果用户提供了前缀，使用第一个前缀，否则默认前缀为 "A"
@@ -41,7 +45,7 @@ func GenerateOutTradeNo(prefix ...string) string {
 	result.WriteString(dt.Format("20060102150405"))
 
 	// 随机生成订单号的剩余部分，确保总长度为 32
-	for i := 0; i < 32-len(result.String()); i++ {
+	for i := 0; i < OrderLength-len(result.String()); i++ {
 		n, _ := rand.Int(rand.Reader, big.NewInt(int64(len(charset))))
 		result.WriteByte(charset[n.Int64()])
 	}
