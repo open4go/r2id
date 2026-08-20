@@ -1,12 +1,13 @@
 module github.com/open4go/r2id
 
-go 1.21.5
+go 1.25.13
 
 require (
 	github.com/bwmarrin/snowflake v0.3.0
 	github.com/open4go/db v0.0.6
 	github.com/open4go/log v0.0.12
 	github.com/redis/go-redis/v9 v9.0.3
+	github.com/spf13/viper v1.12.0
 )
 
 require (
@@ -39,7 +40,6 @@ require (
 	github.com/spf13/cast v1.5.0 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/spf13/viper v1.12.0 // indirect
 	github.com/subosito/gotenv v1.3.0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.52.0 // indirect
 	go.opentelemetry.io/otel v1.27.0 // indirect

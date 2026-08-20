@@ -69,3 +69,8 @@ func S6Code() string {
 func S3Code() string {
 	return fmt.Sprintf("%d", Cutter(3, B3Bit))
 }
+
+// X5Code 管理员账号
+func X5Code() string {
+	return fmt.Sprintf("X%d", Cutter(5, B3Bit))
+}
